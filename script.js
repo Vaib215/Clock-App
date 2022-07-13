@@ -38,16 +38,17 @@ const fetchTime = async () => {
 }
 
 const fetchBgImg = async (greet) => {
-    const fetchedData = await fetch(`https://pixabay.com/api/?key=28599399-622a30aa5d939892e55559f69&q=${greet}&image_type=photo&per_page=12&category=nature`)
+    const randomNumber = Math.floor(Math.random() * 50)
+    const fetchedData = await fetch(`https://pixabay.com/api/?key=28599399-622a30aa5d939892e55559f69&q=${greet}&image_type=photo&per_page=${randomNumber}&category=nature&orientation=horizontal`)
     const data = await fetchedData.json();
-    const number = Math.floor(Math.random() * 12)
+    const number = Math.floor(Math.random() * data.hits.length)
     console.log(data)
     const result = await data.hits[+number].largeImageURL
     body.style.background = `url(${result}) no-repeat`
     body.style.backgroundSize = 'cover'
     setTimeout(()=>{
         loading.classList.add('hidden')
-    },3000)
+    },1500)
 }
 
 
@@ -65,6 +66,7 @@ const fetchTimeDetails = async () => {
 
 const toggleMore = () => {
     body.classList.toggle('swiped');
+    moreButton.innerHTML = body.classList.contains('swiped') ? '<span>Less</span><img src="./assets/icon-arrow-up.svg" alt="">' : '<span>More</span><img src="./assets/icon-arrow-up.svg" alt="">'
 }
 
 fetchQuote()
